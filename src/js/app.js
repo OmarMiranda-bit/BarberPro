@@ -1,0 +1,9 @@
+import './galerias.js';
+import './cita.js';
+import './buscador.js';
+import './testimoniales.js';
+import './mapa.js';
+import './ux.js';
+import './reservar.js';
+import './graficas.js';
+import './disponibilidad.js';

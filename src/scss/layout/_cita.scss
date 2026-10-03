@@ -1,0 +1,184 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use "sass:color";
+.seccion {
+    padding: 5rem 0;
+    display: none;
+
+    .text-center{
+        text-align: center;
+    }
+    &.mostrar{
+        display: block;
+    }
+    &.ocultar{
+        display: none;
+    }
+}
+
+//Informacion para la cita 
+//Barberos 
+
+.listado-barberos {
+    gap: 1.5rem;
+    margin: 2rem 0.5rem 2rem 1rem;
+    
+    // Móvil: 2 columnas (vertical)
+    @include m.grid(2, 1.5rem);
+    
+    // Tablet: 3 columnas
+    @include m.tablet {
+        @include m.grid(3, 2rem);
+    }
+    
+    // Desktop: 4 columnas
+    @include m.desktop {
+        @include m.grid(4, 2rem);
+    }
+}
+
+.barbero {
+    background-color: v.$blanco;
+    padding: 2rem 1.5rem;
+    border-radius: 1.3rem;
+    transition: all 300ms ease;
+    cursor: pointer;
+    text-align: center;
+    @include m.shadow;
+    @include m.displayFlex(center, center, column);
+    gap: 1rem;
+    position: relative;
+    
+    &:hover {
+        transform: translateY(-0.5rem);
+        box-shadow: 0 1rem 3rem rgba(v.$negro, 0.15);
+    }
+    
+    &.seleccionado {
+        background-color: v.$azul;
+        transform: translateY(-0.5rem) scale(1.05);
+        box-shadow: 0 1.5rem 4rem rgba(v.$azul, 0.4);
+        
+        .barbero__nombre {
+            color: v.$blanco;
+        }
+        
+        // .barbero__imagen {
+        //     border-color: v.$blanco;
+        //     box-shadow: 0 0 0 3px v.$azul, 0 0 0 6px v.$blanco;
+        // }
+    }
+    
+    // ELEMENT: imagen (circular)
+    &__imagen {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 50%;
+        object-fit: cover;
+        // border: 3px solid v.$azul;
+        transition: all 300ms ease;
+        box-shadow: 0 0.5rem 1.5rem rgba(v.$azul, 0.3);
+        
+        @include m.tablet {
+            width: 9rem;
+            height: 9rem;
+        }
+    }
+    
+    // iniciales (si no hay imagen)
+    &__iniciales {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 50%;
+        background: linear-gradient(135deg, v.$azul, color.adjust(v.$azul, $lightness: 10%));
+        color: v.$blanco;
+        @include m.displayFlex(center, center, row);
+        font-size: 3rem;
+        font-weight: v.$black;
+        border: 4px solid v.$azul;
+        box-shadow: 0 0.5rem 1.5rem rgba(v.$azul, 0.3);
+        
+        @include m.tablet {
+            width: 9rem;
+            height: 9rem;
+            font-size: 3.5rem;
+        }
+    }
+    
+    // nombre
+    &__nombre {
+        color: v.$negro;
+        font-size: 1.4rem;
+        font-weight: v.$bold;
+        margin: 0;
+        user-select: none;
+        line-height: 1.3;
+        
+        @include m.tablet {
+            font-size: 1.5rem;
+        }
+    }
+}
+
+// Ajustes al campo de barberos
+.campo--barberos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
+    label {
+        flex: none;
+        margin-bottom: 0;
+    }
+}
+
+// ---------------------- loops de los horarios-----------------
+
+.listado-horarios {
+    @include m.grid(2, 1rem);
+    justify-items: center;
+
+    @include m.tablet {
+        @include m.grid(5, 1.2rem);
+        justify-items: center;
+    }
+}
+
+.horario-btn {
+    background-color: transparent;
+    color: v.$blanco;
+    border: 1px solid v.$azul;
+    border-radius: 1rem;
+    padding: 1.3rem;
+    text-align: center;
+    width: auto;
+    transition: background-color .3s ease, color .3s ease;
+    list-style: none;
+    
+    
+    &:hover {
+        cursor: pointer;
+        background-color: color.adjust(v.$azul, $lightness: 45%);
+        color: v.$azul;
+    }
+
+    // Slot seleccionado — fondo azul, texto blanco
+    &--seleccionado {
+        background-color: v.$azul;
+        color: v.$blanco;
+        border: 1px solid v.$azul;
+    }
+
+    // Slot ocupado — gris, deshabilitado
+    &--ocupado {
+        @extend .horario-btn;
+        border: 1px solid v.$gris;
+        color: v.$gris;
+        opacity: .5;
+        pointer-events: none;
+        
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+}

@@ -1,0 +1,169 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.admin__heading {
+  @include m.nombre-pagina;
+}
+.admin__descripcion {
+  @include m.descripcion-pagina;
+}
+
+// Dashboard de Estadísticas
+.barbero-stats {
+  @include m.grid-auto(2rem);
+  margin-bottom: v.$separacion;
+  @include m.tablet {
+    @include m.grid(3, 1rem);
+  }
+
+  .stat-card {
+    background-color: v.$negro;
+    padding: 1.2rem 1.5rem;
+    border-radius: 1rem;
+    border-left: 5px solid v.$color-accent;
+    @include m.shadow;
+    text-align: center;
+    @include m.displayFlex(center, center, column);
+    justify-content: space-between;
+    height: 100%;
+
+    .stat-label {
+      color: v.$color-secondary;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .stat-numero {
+      color: v.$color-accent;
+      font-size: 3rem;
+      font-weight: v.$bold;
+      margin: 0;
+    }
+
+    &--accion {
+      border-left-color: v.$azul; // Cambia el color del borde izquierdo para diferenciarlo
+    }
+
+    .btn-administrar {
+      @include m.btnChico(v.$color-accent, v.$negro);
+      border-radius: 1rem;
+      margin: 0.5rem 0 0 0;
+      width: 100%;
+      text-align: center;
+      font-weight: v.$bold;
+      // font-size: 1.3rem;
+    }
+  }
+}
+
+// Estilos para la Cita (Card)
+.citas {
+  list-style: none;
+  padding: 0;
+
+  .cita-card {
+    background-color: v.$negro;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    @include m.shadow;
+    border: 1px solid rgba(v.$color-accent, 0.1);
+
+    p {
+      @include m.parrafo;
+      margin-bottom: 1rem;
+    }
+    span {
+      color: v.$color-text;
+      font-weight: v.$bold;
+    }
+
+    &__servicio {
+      color: v.$color-text;
+      margin-bottom: 0.5rem;
+      span {
+        color: v.$verde;
+      }
+    }
+
+    h3 {
+      color: v.$color-accent;
+      border-bottom: 1px solid v.$color-secondary;
+      padding-bottom: 1rem;
+      margin-top: 2rem;
+    }
+
+    .total {
+      font-size: 2rem;
+      color: v.$color-text;
+      text-align: right;
+      span {
+        color: v.$verde;
+      }
+    }
+  }
+}
+
+// Botones de Acción dentro de la cita
+.acciones-barbero {
+  @include m.displayFlex(flex-end, center, row);
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px dashed v.$color-secondary;
+
+  .btn-iniciar {
+    @include m.btnChico(v.$azul, v.$blanco);
+    margin: 0;
+  }
+  .btn-finalizar {
+    @include m.btnChico(v.$verde, v.$blanco);
+    margin: 0;
+  }
+  .btn-cancelar {
+    @include m.btnChico(v.$rojo, v.$blanco);
+    margin: 0;
+  }
+}
+
+// Historial Link
+.link-historial {
+  @include m.enlace;
+  color: v.$color-accent;
+  text-decoration: underline;
+}
+
+// Modificador para la hora del próximo cliente
+.stat-numero--proximo {
+  font-size: 1.8rem;
+}
+
+// Elementos de acciones del barbero
+.acciones-barbero {
+  &__form {
+    display: inline;
+  }
+}
+
+// Modificadores o pseudo-clases de botones deshabilitados
+.btn-iniciar--deshabilitado,
+.btn-cancelar--deshabilitado,
+.acciones-barbero button:disabled,
+.acciones-barbero input:disabled {
+  background-color: #4b5563;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+// Componente del Cronómetro
+.cronometro {
+  margin-bottom: 1rem;
+  font-weight: v.$bold;
+  color: v.$color-accent; // #f59e0b
+
+  &__tiempo {
+    color: v.$blanco;
+  }
+}

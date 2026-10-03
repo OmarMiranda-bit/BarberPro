@@ -1,0 +1,198 @@
+@use "base/variables" as v;
+@use "base/animaciones" as anim;  // ← AÑADIDO
+@use "base/mixins" as m;
+@use "sass:color";
+
+.why-choose {
+
+  &__container {
+    @include m.contenedor;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 6rem;
+
+    @include m.tablet {
+      margin-bottom: 8rem;
+    }
+  }
+
+  &__subtitle {
+    display: inline-block;
+    font-size: 1.4rem;
+    color: v.$color-accent;
+    font-weight: v.$bold;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem 2rem;
+    background: rgba(v.$color-accent, 0.1);
+    border: 1px solid rgba(v.$color-accent, 0.3);
+    border-radius: 5rem;
+
+    @include m.tablet {
+      font-size: 1.6rem;
+    }
+  }
+
+  &__title {
+    font-size: 2.8rem;
+    font-weight: v.$black;
+    color: v.$blanco;
+    margin: 2rem 0 0 0;
+    line-height: 1.2;
+
+    @include m.tablet {
+      font-size: 3.8rem;
+    }
+
+    &-accent {
+      color: v.$color-accent;
+      position: relative;  // ✅ NECESARIO (para ::after position: absolute)
+      display: inline-block;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 0.4rem;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          v.$color-accent,
+          transparent
+        );
+        animation: anim.$animation-lineExpand;  // ← USA VARIABLE
+      }
+    }
+  }
+
+  &__grid {
+    @include m.grid-auto(3rem);
+    // margin-bottom: 8rem;
+
+    @include m.tablet {
+      @include m.grid(2, 3rem);
+      // margin-bottom: 6rem;
+    }
+
+    @include m.desktop {
+      @include m.grid(4, 3rem);
+    }
+  }
+
+  &__card {
+    background: linear-gradient(
+      135deg,
+      rgba(v.$color-secondary, 0.1) 0%,
+      rgba(v.$color-secondary, 0.05) 100%
+    );
+    border: 2px solid rgba(v.$color-accent, 0.15);
+    border-radius: 2rem;
+    padding: 3rem 2rem;
+    position: relative;  // ✅ NECESARIO (para ::before position: absolute)
+    transition: all 0.4s ease;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+
+    // Efecto de brillo en hover
+    &::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(v.$color-accent, 0.1),
+        transparent
+      );
+      transform: rotate(45deg);
+      transition: all 0.6s ease;
+      opacity: 0;
+    }
+
+    &:hover {
+      transform: translateY(-1rem);
+      border-color: v.$color-accent;
+      box-shadow: 0 2rem 4rem rgba(v.$color-accent, 0.2);
+
+      &::before {
+        opacity: 1;
+        animation: anim.$animation-shimmer;  // ← USA VARIABLE
+      }
+
+      .why-choose__card-icon {
+        transform: scale(1.1) rotateY(360deg);
+        color: v.$color-accent;
+      }
+    }
+
+    @include m.tablet {
+      padding: 4rem 3rem;
+    }
+
+    &-flex {  // ← CORREGIDO: Espacio antes de {
+      @include m.displayFlex(center, center, row);
+      gap: 1.5rem;
+
+      @include m.tablet {  // ← CORREGIDO: Espacio antes de {
+        @include m.displayFlex(space-evenly, center, row);
+        gap: 2rem;
+      }
+    }
+
+    &-icon {
+      @include m.displayFlex(center, center, row);
+      background: linear-gradient(
+        135deg,
+        rgba(v.$color-accent, 0.2),
+        rgba(v.$color-accent, 0.05)
+      );
+      border: 2px solid rgba(v.$color-accent, 0.3);
+      border-radius: 50%;
+      color: v.$color-accent;
+      font-size: 2.5rem;
+      margin-bottom: 2.5rem;
+      transition: all 0.4s ease;
+
+      i {
+        font-size: 2rem;
+        margin: 1.5rem;
+
+        @include m.tablet {
+          font-size: 2.4rem;
+          margin: 2rem;
+        }
+      }
+    }
+
+    &-title {
+      font-size: 1.9rem;
+      color: v.$blanco;
+      font-weight: v.$bold;
+      // ← REMOVIDO: position: relative (innecesario, no tiene pseudo-elementos)
+
+      @include m.tablet {
+        font-size: 2.1rem;
+      }
+    }
+
+    &-text {
+      text-align: center;
+      font-size: 1.4rem;
+      color: color.adjust(v.$blanco, $lightness: -25%);
+      line-height: 1.7;
+      font-weight: v.$regular;
+
+      @include m.tablet {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

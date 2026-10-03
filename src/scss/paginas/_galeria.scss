@@ -1,0 +1,336 @@
+
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use 'sass:color';
+/*Estilos para la galeria (Home) y galeria.php*/
+/*-------------------- Animaciones ------------------*/
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
+}
+
+/*-------------------- Mixins específicos de galería ------------------*/
+@mixin gallery-item-base {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    cursor: pointer;
+    aspect-ratio: 1/1;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: v.$color-accent;
+        transform: scale(1.02);
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+
+    &:hover img {
+        transform: scale(1.1);
+    }
+}
+
+@mixin gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(v.$color-bg, 0.95), transparent);
+    padding: 2rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+// ----------gallery----------
+.gallery {
+    @include m.contenedor;
+    padding: 4rem 2rem;
+}
+
+.gallery__header {
+    text-align: center;
+    margin-bottom: v.$separacion;
+}
+
+.gallery__title {
+    font-size: 4.8rem;
+    margin-bottom: 1rem;
+    color: v.$color-accent;
+
+    @include m.tablet {
+        font-size: 3.2rem;
+    }
+}
+
+.gallery__subtitle {
+    font-size: 1.8rem;
+    color: v.$color-secondary;
+    font-weight: v.$regular;
+
+    @include m.tablet {
+        font-size: 1.6rem;
+    }
+}
+
+// Filtros (solo galería completa)
+.gallery__filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+
+    @include m.telefono {
+        gap: 1rem;
+    }
+}
+
+.gallery__filter-btn {
+    background: v.$color-secondary;
+    color: v.$color-text;
+    border: 2px solid transparent;
+    padding: 1rem 2.5rem;
+    font-size: 1.4rem;
+    font-weight: v.$bold;
+    border-radius: 2.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+
+    &:hover,
+    &--active {
+        background: v.$color-button;
+        border-color: v.$color-accent;
+        transform: translateY(-0.2rem);
+    }
+
+    @include m.telefono {
+        padding: 0.8rem 1.5rem;
+        font-size: 1.2rem;
+    }
+}
+
+.gallery__grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+    padding: 2rem 0;
+
+    @include m.telefono {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    @include m.tablet {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include m.desktop {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    // Modifier: home (galería en inicio)
+    &--home {
+        @include m.telefono {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include m.tablet {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include m.desktop {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    // Modifier: full (galería completa)
+    &--full {
+        @include m.telefono {
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        }
+    }
+}
+
+// Element: item
+.gallery__item {
+    @include gallery-item-base;
+
+    // Modifier: home
+    &--home {
+        @include gallery-item-base;
+    }
+
+    // Modifier: full
+    &--full {
+        @include gallery-item-base;
+    }
+}
+
+// Element: overlay
+.gallery__overlay {
+    @include gallery-overlay;
+
+    .gallery__item:hover & {
+        transform: translateY(0);
+    }
+}
+
+.gallery__item-title {
+    font-size: 1.8rem;
+    font-weight: v.$bold;
+    color: v.$color-accent;
+    margin-bottom: 0.5rem;
+}
+
+.gallery__item-description {
+    font-size: 1.4rem;
+    color: v.$color-text;
+    font-weight: v.$regular;
+}
+
+// Element: cta (call to action - solo home)
+.gallery__cta {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.gallery__cta-btn {
+    display: inline-block;
+    background: v.$color-button;
+    color: v.$color-text;
+    padding: 1.5rem 4rem;
+    font-size: 1.6rem;
+    font-weight: v.$bold;
+    border-radius: 2.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0.5rem 2rem rgba(v.$color-button, 0.5);
+        background: color.adjust(v.$color-button, $lightness: -10%);
+    }
+}
+
+// ============================================
+// BLOCK: gallery__modal
+// ============================================
+.gallery__modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    animation: fadeIn 0.3s ease;
+    
+    // Los modificadores --home y --full se usan solo en HTML/JS
+    // para identificación, pero no requieren estilos CSS propios
+}
+
+// Element: modal content (imagen)
+.gallery__modal-content {
+    position: relative;
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85vh;
+    margin-top: 5rem;
+    animation: zoomIn 0.3s ease;
+}
+
+// Element: modal info
+.gallery__modal-info {
+    text-align: center;
+    padding: 2rem;
+    color: v.$color-text;
+}
+
+.gallery__modal-title {
+    color: v.$color-accent;
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+}
+
+.gallery__modal-description {
+    font-size: 1.6rem;
+    color: v.$color-text;
+}
+
+// Element: modal close button
+.gallery__modal-close {
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+    color: v.$color-accent;
+    font-size: 5rem;
+    font-weight: v.$black;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 1001;
+
+    &:hover {
+        color: v.$color-button;
+    }
+
+    @include m.tablet {
+        font-size: 4rem;
+        right: 2rem;
+    }
+    
+    // Los modificadores --home y --full heredan estos estilos
+    // y solo sirven para identificación en JavaScript
+}
+
+// Element: modal navigation
+.gallery__modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4rem;
+    color: v.$color-accent;
+    cursor: pointer;
+    padding: 2rem;
+    user-select: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: v.$color-button;
+    }
+
+    @include m.tablet {
+        font-size: 3rem;
+        padding: 1rem;
+    }
+
+    // Modificadores de posición
+    &--prev,
+    &--prev-home,
+    &--prev-full {
+        left: 2rem;
+    }
+
+    &--next,
+    &--next-home,
+    &--next-full {
+        right: 2rem;
+    }
+}

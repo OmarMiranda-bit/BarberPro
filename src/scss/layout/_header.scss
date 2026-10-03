@@ -1,0 +1,436 @@
+@use "base/variables" as v;
+@use "base/animaciones" as anim;
+@use "base/mixins" as m;
+@use "sass:color";
+
+// Prevenir scroll cuando el menú móvil está abierto
+body.menu-open {
+    overflow: hidden;
+    @include m.tablet {
+      overflow: auto;
+    }
+}
+
+// Padding superior cuando hay usuario logueado (navbar sticky permanente)
+body.usuario-logueado {
+    padding-top: 8rem;
+}
+
+/*Barra de navegacion */
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0; //reemplaza top, right, left, bottom 
+  z-index: 1000;
+  background: transparent;
+  transition: anim.$transition-normal;
+  padding: 1.5rem 1rem;
+
+  // Modificador: sticky - SOLO afecta navbar, NO al menú
+  &--sticky {
+    background: rgba(v.$color-bg, 0.98);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.5);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(v.$color-accent, 0.2);
+  }
+
+  &__container {
+    @include m.contenedor;
+    @include m.displayFlex(space-between, center, row);
+    gap: 1.5rem;
+    margin-top: 1.8rem;
+    @include m.tablet {
+      gap: 1rem;
+    }
+    @include m.desktop {
+      gap: 2rem;
+    }
+  }
+
+  &__logo {
+    font-size: 2.8rem;
+    font-weight: v.$black;
+    color: v.$blanco;
+    text-decoration: none;
+    transition: anim.$transition-fast;
+    z-index: 1001;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    @include m.tablet {
+      font-size: 2.5rem;
+      text-align: center;
+    }
+    @include m.tablet {
+      font-size: 3.5rem;
+    }
+
+    &-text {
+      font-weight: v.$regular;
+
+      &--bold {
+        font-weight: v.$black;
+        color: v.$color-accent;
+      }
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: v.$blanco;
+    font-size: 2.4rem;
+    transition: anim.$transition-fast;
+    position: relative;
+    z-index: 1001;
+
+    i {
+      transition: anim.$transition-fade, anim.$transition-transform;
+      display: inline-block;
+    }
+
+    &:hover {
+      color: v.$color-accent;
+      transform: scale(1.1);
+    }
+
+    @include m.tablet {
+      display: none;
+    }
+
+    &--active {
+      color: v.$color-accent;
+
+      i {
+        animation: anim.$animation-rotateFast;
+      }
+    }
+  }
+
+
+  &__item {
+    width: 100%;
+
+    @include m.tablet {
+      width: auto;
+    }
+
+    &--cta {
+      display: none;// Oculto hasta que scroll > 600px
+      @include m.tablet {
+        align-self: center;
+      }
+    }
+  }
+
+  // MENÚ CORREGIDO
+  &__menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    @include m.displayFlex(start, center, column);
+    gap: 2.2rem;
+    position: fixed;
+    inset: 8rem 0 0 auto;  // Reemplaza top, right, bottom
+    width: 70vw;
+    max-width: 35rem;
+    background: rgba(v.$color-bg, 0.98);
+    backdrop-filter: blur(10px);
+    padding: 7rem 2rem 2rem ;
+    transition: anim.$transition-menu !important;
+    box-shadow: -0.5rem 0 2rem rgba(0, 0, 0, 0);
+    height: 60vh;
+    overflow-y: auto; //en caso de ser necesario scroll se muestra
+    overflow-x: hidden; // scroll horizontal oculto 
+    
+    // Estado inicial (oculto)
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+
+    @include m.tablet {
+      position: static;
+      inset: auto;  // RESET en tablet
+      flex-direction: row;
+      align-items: center;
+      width: auto;
+      max-width: none;
+      height: auto;  // RESET en tablet
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+      overflow-y: visible;
+      transition: none;
+    }
+
+    &--active {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+      box-shadow: -0.5rem 0 2rem rgba(0, 0, 0, 0.5);
+      border-radius: 1rem;
+    }
+  }
+
+  &__link {
+    font-size: 1.6rem;
+    color: v.$blanco;
+    text-decoration: none;
+    font-weight: v.$regular;
+    transition: anim.$transition-fast;
+    display: block;
+    padding: 1rem 1.5rem;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0.2rem;
+      background: v.$color-accent;
+      transition: anim.$transition-width;
+    }
+
+    &:hover,
+    &--active {
+      color: v.$color-accent;
+
+      &::before {
+        width: 80%;
+      }
+    }
+
+    @include m.tablet {
+      padding: 0.8rem 0.9rem;
+      font-size: 1.5rem;
+    }
+
+    @include m.desktop {
+      padding: 1rem 1.4rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  &__btn {
+    @include m.boton(v.$color-button, v.$blanco, "pequeño");
+    border: 1px solid v.$color-accent;
+
+    &:hover {
+      transform: translateY(-0.2rem);
+      box-shadow: 0 0.5rem 2rem rgba(v.$color-button, 0.5);
+    }
+  }
+}
+
+
+
+/* =======================BLOQUE: hero ======================= */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background-image: linear-gradient(
+      135deg,
+      rgba(v.$negro, 0.9) 0%,
+      rgba(v.$negro, 0.6) 50%,
+      rgba(v.$negro, 0.8) 100%
+    ),
+    image-set(
+      url(../img/1.avif) 1x,
+      url(../img/1.webp) 1x,
+      url(../img/1.jpg) 1x
+    );
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  @include m.displayFlex(center, center, column);
+  padding: 12rem 2rem 8rem;
+
+  @include m.tablet {
+    padding: 15rem 2rem 10rem;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+      circle at 30% 50%,
+      rgba(v.$color-accent, 0.1) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    max-width: 90rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 3.5rem;
+    font-weight: v.$black;
+    color: v.$blanco;
+    margin: 0 0 2.5rem 0;
+    padding-top: 2rem;
+    line-height: 1.1;
+    animation: anim.$animation-fadeInUp-delay-1;
+
+    @include m.tablet {
+      font-size: 5rem;
+      padding-top: 5rem;
+    }
+
+    &-line {
+      display: block;
+
+      &--accent {
+        color: v.$color-accent;
+        font-size: 4rem;
+
+        @include m.tablet {
+          font-size: 7.3rem;
+        }
+      }
+    }
+  }
+
+  &__description {
+    font-size: 1.7rem;
+    color: color.adjust(v.$blanco, $lightness: -20%);
+    line-height: 1.7;
+    margin: 0 0 4rem 0;
+    max-width: 65rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: v.$regular;
+    animation: anim.$animation-fadeInUp-delay-2;
+
+    @include m.tablet {
+      font-size: 1.9rem;
+    }
+  }
+
+  &__actions {
+    @include m.displayFlex(center, center, row);
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 6rem;
+    animation: anim.$animation-fadeInUp-delay-3;  
+  }
+
+  &__btn {
+    @include m.displayFlex(center, center, row);
+    gap: 1rem;
+    padding: 1.3rem 2.5rem;
+    font-size: 1.4rem;
+    font-weight: v.$bold;
+    border-radius: 3rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: anim.$transition-smooth;  
+    border: 2px solid transparent;
+
+    &--primary {
+      background: v.$color-button;
+      color: v.$blanco;
+      border-color: v.$color-accent;
+
+      &:hover {
+        transform: translateY(-0.3rem);
+        box-shadow: 0 1rem 3rem rgba(v.$color-button, 0.5);
+        background: color.adjust(v.$color-button, $lightness: -10%);
+      }
+    }
+
+    &--secondary {
+      background: transparent;
+      color: v.$blanco;
+      border-color: v.$blanco;
+
+      &:hover {
+        background: v.$blanco;
+        color: v.$color-bg;
+      }
+    }
+
+    @include m.tablet {
+      padding: 1.5rem 3.5rem;
+      font-size: 1.6rem;
+    }
+
+    &-icon {
+      font-size: 1.8rem;
+      display: inline-block;
+    }
+  }
+
+  &__features {
+    @include m.displayFlex(center, center, row);
+    gap: 2rem;
+    flex-wrap: wrap;
+    animation: anim.$animation-fadeInUp-delay-4;  
+
+    @include m.tablet {
+      gap: 4rem;
+    }
+  }
+
+  &__feature {
+    @include m.displayFlex(center, center, row);
+    gap: 1.5rem;
+
+    &-icon {
+      color: v.$color-accent;
+      font-size: 1.8rem;
+      display: inline-block;
+
+      @include m.tablet {
+        font-size: 2.3rem;
+      }
+    }
+
+    &-text {
+      font-size: 1.2rem;
+      color: v.$blanco;
+      font-weight: v.$regular;
+
+      strong {
+        color: v.$color-accent;
+        font-weight: v.$black;
+        font-size: 1.6rem;
+        display: block;
+      }
+
+      @include m.tablet {
+        font-size: 1.4rem;
+
+        strong {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}

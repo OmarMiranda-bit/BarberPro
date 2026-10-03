@@ -1,0 +1,267 @@
+@use "variables" as v;
+@use "sass:color";
+
+// Media Queries
+@mixin telefono {
+  @media (min-width: v.$telefono) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: v.$tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: v.$desktop) {
+    @content;
+  }
+}
+
+@mixin desktopXL {
+  @media (min-width: v.$desktopXL) {
+    @content;
+  }
+}
+
+// Contenedores
+@mixin contenedor {
+  width: min(95%, 140rem);
+  margin: 0 auto;
+}
+
+@mixin contenedor-md {
+  width: min(95%, 80rem);
+  margin: 0 auto;
+}
+
+@mixin contenedor-sm {
+  width: min(95%, 60rem);
+  margin: 0 auto;
+}
+
+//utilidades 
+@mixin logo {
+  color: v.$blanco;
+  text-align: center;
+  margin-bottom: 2rem;
+  white-space: nowrap;
+  @include desktop {
+    text-align: left;
+    margin: 0;
+  }
+}
+@mixin texto-fluido($min, $max) {
+  font-size: clamp($min, -0.8rem + 10vw, $max);
+}
+@mixin enlace {
+  all: unset;
+  color: v.$blanco;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  font-weight: v.$bold;
+  // background-color: transparent;
+  // border: none;
+  &:hover {
+    color: v.$azul;
+    cursor: pointer;
+  }
+}
+@mixin shadow{
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+// Tipografía
+@mixin headings {
+  font-family: v.$fuente_header;
+  font-weight: v.$black;
+  margin: 2rem 0;
+}
+
+@mixin nombre-pagina {
+  @include headings;
+  // margin: 6rem 0 3rem 0;
+  text-align: center;
+}
+
+@mixin descripcion-pagina {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: v.$delgada;
+  margin-bottom: 5rem;
+}
+
+@mixin parrafo {
+  font-weight: v.$delgada;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: v.$color-secondary;
+  margin-bottom: 2.5rem;
+}
+
+// Botones
+
+@mixin boton($bgColor, $colorTexto, $tamaño: "normal") {
+  background-color: $bgColor;
+  color: $colorTexto;
+  font-weight: v.$bold;
+  border: none;
+  transition: all 0.3s ease; // Cambié a 'all' para incluir transform
+  text-align: center;
+  text-decoration: none; // Agregado para enlaces
+  border-radius: 0.5rem; // Agregado (valor por defecto)
+  cursor: pointer;
+
+  @if $tamaño == "normal" {
+    padding: 1.5rem 4rem;
+    font-size: 2rem;
+    display: block;
+    width: 100%;
+    margin: 5rem 0;
+
+    @include tablet {
+      width: auto;
+    }
+  } @else if $tamaño == "pequeño" {
+    padding: 1rem 2.5rem;
+    font-size: 1.6rem;
+    display: inline-block;
+    margin: 0;
+    border-radius: 2.5rem;
+  }
+
+  &:hover {
+    background-color: color.scale($bgColor, $lightness: -10%);
+  }
+}
+
+@mixin btnChico($bgColor, $colorTexto) {
+  background-color: $bgColor;
+  padding: 1.2rem;
+  color: $colorTexto;
+  margin: 2.5rem 0;
+  display: block;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  text-align: center;
+
+  @include tablet {
+    width: auto;
+  }
+
+  &:hover {
+    background-color: color.scale($bgColor, $lightness: -10%);
+    cursor: pointer;
+  }
+}
+
+// Layouts
+@mixin grid($columnas, $espaciado) {
+  display: grid;
+  gap: $espaciado;
+  grid-template-columns: repeat($columnas, 1fr);
+}
+
+@mixin grid-auto($espaciado) {
+  display: grid;
+  gap: $espaciado;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+@mixin displayFlex($justify, $align, $direction) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+}
+
+//Formularios
+
+@mixin formularioTitle($fontSizeM, $marginB, $fontSizeT) {
+  font-size: $fontSizeM;
+  color: v.$color-accent;
+  margin-bottom: $marginB;
+  font-weight: v.$bold;
+  text-align: center;
+
+  @include tablet {
+    font-size: $fontSizeT;
+  }
+}
+
+@mixin formularioSubtitle($fontSize, $marginB) {
+  font-size: $fontSize;
+  color: v.$color-secondary;
+  text-align: center;
+  margin-bottom: $marginB;
+  font-weight: v.$regular;
+}
+
+@mixin formLabel {
+    @include displayFlex(flex-start, center, row);
+      gap: 1rem;
+      font-size: 1.5rem;
+      color: v.$color-accent;
+      margin-bottom: 1rem;
+      font-weight: v.$bold;
+}
+
+@mixin formInput($width: 100%, $padding: 1.5rem 2rem, $font-size: 1.5rem) {
+      width: $width;
+      padding: $padding;
+      background: rgba(v.$color-bg, 0.5);
+      border: 1px solid rgba(v.$color-accent, 0.3);
+      border-radius: 1rem;
+      color: v.$color-text;
+      font-size: $font-size;
+      font-weight: v.$regular;
+      transition: all 0.3s ease;
+
+      &::placeholder {
+        color: rgba(v.$color-secondary, 0.6);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: v.$color-accent;
+        box-shadow: 0 0 0 3px rgba(v.$color-accent, 0.1);
+      }
+}
+
+@mixin formSubmitButton($width: 100%, $padding: 1.8rem 3rem, $font-size: 1.6rem) {
+      width: $width;
+      padding: $padding;
+      font-size: $font-size;
+      background: v.$color-accent;
+      color: v.$color-bg;
+      border: none;
+      font-weight: v.$bold;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      @include displayFlex(center, center, row);
+      gap: 1rem;
+      margin-block-start: 3rem;
+
+      i {
+        transition: transform 0.3s ease;
+      }
+
+      &:hover {
+        background: color.adjust(v.$color-accent, $lightness: -10%);
+        transform: translateY(-0.3rem);
+        box-shadow: 0 1rem 2rem rgba(v.$color-accent, 0.5);
+
+        i {
+          transform: translateX(0.5rem);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+}

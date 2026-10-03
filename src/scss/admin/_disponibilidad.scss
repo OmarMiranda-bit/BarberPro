@@ -1,0 +1,160 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use 'sass:color';
+
+.contenedor-disponibilidad {
+    @include m.contenedor;
+    padding: 2rem 0;
+
+    &__btn-regresar {
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: v.$azul;
+        font-weight: v.$bold;
+        font-size: 1.6rem;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: color.adjust(v.$azul, $lightness: 10%);
+        }
+    }
+}
+
+.formulario-disponibilidad {
+    background-color: v.$gris-oscuro;
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.4);
+    margin-bottom: 3rem;
+
+    &__subtitulo {
+        font-size: 2.2rem;
+        color: v.$blanco;
+        margin-bottom: 2rem;
+        text-align: left;
+        border-bottom: 0.2rem solid v.$azul;
+        padding-bottom: 1rem;
+    }
+}
+
+.tabla-horarios {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.fila-dia {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    background-color: color.adjust(v.$gris-oscuro, $lightness: 5%);
+    border-radius: 0.8rem;
+    border: 0.1rem solid transparent;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+        border-color: color.adjust(v.$gris-oscuro, $lightness: 15%);
+    }
+
+    @include m.tablet {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.dia-control {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    min-width: 16rem;
+
+    .checkbox-dia {
+        width: 2.2rem;
+        height: 2.2rem;
+        cursor: pointer;
+        accent-color: v.$azul;
+    }
+
+    label {
+        font-size: 1.8rem;
+        font-weight: v.$bold;
+        color: v.$blanco;
+        cursor: pointer;
+    }
+}
+
+.horas-control {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    transition: opacity 0.3s ease;
+
+    @include m.telefono {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &.deshabilitado {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+}
+
+.campo-hora {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+
+    label {
+        font-size: 1.4rem;
+        color: v.$blanco;
+        white-space: nowrap;
+    }
+
+    input[type="time"],
+    input[type="date"] {
+        width: 100%;
+        padding: 1rem 1.2rem;
+        border: 0.1rem solid v.$gris;
+        border-radius: 0.5rem;
+        background-color: v.$blanco;
+        font-size: 1.6rem;
+        color: v.$negro;
+        outline: none;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            border-color: v.$azul;
+        }
+
+        &:disabled {
+            background-color: color.adjust(v.$blanco, $lightness: -20%);
+            cursor: not-allowed;
+        }
+    }
+}
+
+.campo-submit {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: flex-end;
+
+    .btn-guardar {
+        @include m.boton(v.$azul, v.$blanco);
+        width: 100%;
+
+        @include m.tablet {
+            width: auto;
+        }
+    }
+
+    .btn-cancelar {
+        @include m.boton(v.$rojo, v.$blanco);
+        width: 100%;
+    }
+}

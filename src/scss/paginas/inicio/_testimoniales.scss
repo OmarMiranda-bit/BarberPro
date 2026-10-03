@@ -1,0 +1,136 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+@use "sass:color";
+/* ----ESTILOS PARA LA SECCIÓN DE TESTIMONIALES EN LA PÁGINA INICIO-----*/
+
+.testimonials {
+  position: relative;
+  max-width: 90rem;
+  margin: 0 auto;
+  overflow: hidden;
+  &__wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  &__card {
+    min-width: 100%;
+    padding: 2.5rem;
+    background: rgba(v.$color-secondary, 0.3);
+    border-radius: 1.5rem;
+    border: 2px solid rgba(v.$color-accent, 0.2);
+    text-align: center;
+
+    @include m.tablet {
+      padding: 4rem;
+    }
+  }
+  &__rating {
+      font-family: "Font Awesome 6 Free"; // o "Font Awesome 7 Free" si lo tienes
+      font-weight: 900; // para íconos sólidos
+      font-style: normal;
+      color: v.$color-accent;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      
+      &::before {
+          content: "";
+          display: inline-block;
+          white-space: nowrap;    // evita que las estrellas se rompan en varias líneas
+    }
+
+//    @for $i from 1 through 5 {
+//     &.rating--#{$i}::before {
+//       content: str-repeat("\f005 ", $i); // fa-star unicode
+//      }
+//    }
+// se muestra la cantidad de estrellas dependiendo del numero de la clase rating--n
+     &.rating--1::before { content: "\f005"; }
+     &.rating--2::before { content: "\f005 \f005"; }
+     &.rating--3::before { content: "\f005 \f005 \f005"; }
+     &.rating--4::before { content: "\f005 \f005 \f005 \f005"; }
+     &.rating--5::before { content: "\f005 \f005 \f005 \f005 \f005"; }
+
+  }
+  &__text {
+    font-size: 1.6rem;
+    font-style: italic;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+    color: v.$color-text;
+
+    @include m.tablet {
+      font-size: 1.8rem;
+    }
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  &__avatar {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    border: 3px solid v.$color-accent;
+    object-fit: cover;
+  }
+
+  &__info {
+    text-align: left;
+  }
+  &__name {
+    color: v.$color-accent;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: v.$bold;
+  }
+  &__role {
+    color: v.$color-secondary;
+    font-size: 1.4rem;
+    font-weight: v.$regular;
+  }
+  &__controles {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  &__btn {
+    background: v.$color-button;
+    color: v.$color-text;
+    border: none;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: color.adjust(v.$color-button, $lightness: -10%);
+      transform: scale(1.1);
+    }
+  }
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  &__dot {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background: v.$color-secondary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &--active {
+      background: v.$color-accent;
+      transform: scale(1.2);
+    }
+  }
+}

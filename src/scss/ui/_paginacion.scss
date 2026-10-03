@@ -1,0 +1,19 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use "sass:color";
+
+.paginacion{
+    padding: v.$separacion 0;
+    @include m.telefono{
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    button{
+        margin: 0 0 2rem 0;
+    }
+}
+.ocultar{
+    visibility: hidden; //Sirve para mantener la posiscion del bloque  solo no se puede ver 
+}

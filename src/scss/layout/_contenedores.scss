@@ -1,0 +1,49 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+// Contenedores principales
+.contenedor-paginas {
+  @include m.contenedor;
+}
+
+// contenedor de la vista para el cliente y login 
+.contenedor-auth {
+  @include m.contenedor-md;
+}
+
+// contenedor de la vista de empleados (barberos)
+.contenedor-empleados {
+  @include m.contenedor-md;
+}
+
+.barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  p {
+    font-size: 1.6rem;
+  }
+  &__boton {
+    border-radius: 1.2rem;
+    @include m.btnChico(v.$rojo, v.$negro);
+    width: auto;
+    input {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      color: v.$blanco;
+    }
+  }
+}
+
+.barra-servicios {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.4rem;
+  color: v.$blanco;
+  margin-bottom: v.$separacion;
+
+  &__enlace {
+    color: v.$blanco;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "app-barberia-php-mvc-sass",
+  "version": "1.0.0",
+  "description": "App de barberia basada en AppSalon de curso",
+  "author": "Omar Miranda",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp build"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "glob": "^11.0.3",
+    "gulp": "^5.0.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^6.0.1",
+    "sass": "^1.93.2",
+    "sharp": "^0.34.4",
+    "style-loader": "^4.0.0"
+  },
+  "dependencies": {
+    "sweetalert2": "^11.26.3",
+    "swiper": "^12.0.3",
+    "webpack-stream": "^7.0.0"
+  }
+}

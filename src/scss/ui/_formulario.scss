@@ -1,0 +1,121 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+@use "sass:color";
+
+//Formulario que se usa en el login, registro y restablecer contraseña, y crear servicios
+.formulario {
+  margin-top: 5rem;
+  width: 100%;
+}
+
+.campo {
+  display: flex;
+  margin-bottom: 2rem;
+  align-items: center;
+
+  label {
+    flex: 0 0 10rem;
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    padding: calc(v.$separacion / 4);
+    border-radius: 1rem;
+
+    &:disabled {
+      background-color: color.scale(v.$negro, $lightness: 30%);
+      color: v.$blanco;
+      cursor: not-allowed;
+    }
+  }
+}
+//Formularios que se usan para el dashboard
+.formulario {
+  &__fieldset {
+    border: none;
+    margin-top: 1rem;
+    padding: 0;
+  }
+  &__legend {
+    color: v.$gris;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+  }
+
+  &__campo {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  &__contenedor-icono {
+    display: flex;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  &__icono {
+    background-color: v.$gris-oscuro;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      color: v.$blanco;
+      font-size: 2.5rem;
+    }
+  }
+  &__label {
+    display: block;
+    font-size: 1.8rem;
+    color: rgba(v.$negro, 0.8);
+  }
+  &__input,
+  &__select,
+  &__textarea {
+    padding: 1rem;
+    border: 1px solid color.adjust(v.$gris-claro, $lightness: -20%);
+    border-radius: 0.5rem;
+    width: 100%; // Asegura que ocupe todo el ancho disponible
+
+    &--file {
+      border: none;
+    }
+    &--sociales {
+      @extend .formulario__input;
+      flex: 1;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+}
+&__textarea {
+  height: 12rem;
+  resize: none;
+  line-height: 1.5;
+}
+&__radio {
+    display: flex;
+    gap: 2rem;
+  }
+  &__texto {
+    margin-top: 3rem;
+  }
+  &__imagen {
+    max-width: 20rem;
+  }
+  // &__listado{
+  //     @include m.tags;
+
+  // }
+  &__submit {
+    @include m.boton(v.$azul, v.$blanco);
+    width: auto;
+    align-self: flex-start;
+
+    &--registrar,
+    &--full {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,108 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+@use "sass:color";
+/* ----ESTILOS PARA LA SECCIÓN DE LOCACIÓN EN LA PÁGINA INICIO-----*/
+
+.location {
+  @include m.grid-auto(3rem);
+}
+
+.location__info {
+  background: rgba(v.$color-secondary, 0.3);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  border: 2px solid rgba(v.$color-accent, 0.2);
+
+  @include m.tablet {
+    padding: 4rem;
+  }
+}
+
+.location__item {
+  margin-bottom: 3rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.location__heading {
+  color: v.$color-accent;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: v.$bold;
+}
+
+.location__text {
+  color: v.$color-text;
+  font-size: 1.6rem;
+  line-height: 1.8;
+  font-weight: v.$regular;
+}
+
+.location__schedule {
+  @include m.grid(1, 1rem);
+  margin-top: 1rem;
+
+  @include m.tablet {
+    @include m.grid(2, 1rem);
+  }
+}
+
+.location__day {
+  color: v.$color-accent;
+  font-weight: v.$bold;
+  font-size: 1.4rem;
+}
+
+.location__time {
+  color: v.$color-text;
+  font-size: 1.4rem;
+  font-weight: v.$regular;
+}
+
+.location__actions {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.location__btn {
+  background: v.$color-button;
+  color: v.$color-text;
+  border: none;
+  padding: 1.2rem 3rem;
+  font-size: 1.4rem;
+  font-weight: v.$bold;
+  border-radius: 2.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+
+  &:hover {
+    background: color.adjust(v.$color-button, $lightness: -10%);
+    transform: scale(1.05);
+  }
+}
+
+.location__map {
+  // height: 40rem;
+
+  // @include m.tablet {
+  //     height: auto;
+  // }
+  width: 100%;
+  height: 40rem;
+  border-radius: 1.5rem;
+  border: 2px solid rgba(v.$color-accent, 0.2);
+  display: block;
+
+  @include m.tablet {
+    height: 100%;
+  }
+}

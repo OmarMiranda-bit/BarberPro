@@ -1,0 +1,359 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+@use "sass:color";
+
+/* Pagina de contacto*/
+.contacto {
+  min-height: 80vh;
+
+  &__container {
+    @include m.contenedor;
+    padding: 4rem 2rem;
+  }
+  // Grid principal
+  &__grid {
+    @include m.grid(1, 4rem);
+    margin: 4rem 0;
+
+    @include m.tablet {
+      @include m.grid(2, 5rem);
+    }
+  }
+
+  // Informacion de contacto
+  &__info {
+    background: rgba(v.$color-secondary, 0.1);
+    border-radius: 2rem;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+
+    &-title {
+      font-size: 2.4rem;
+      color: v.$color-accent;
+      margin-bottom: 3rem;
+      font-weight: v.$bold;
+      text-align: center;
+
+      @include m.tablet {
+        font-size: 2.8rem;
+      }
+    }
+    // contenedor de los items
+    &-item {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(v.$color-accent, 0.1);
+
+      &:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+
+    &-icon {
+      min-width: 5rem;
+      height: 5rem;
+      border-radius: 1.2rem;
+      @include m.displayFlex(center, center, row);
+      font-size: 2.2rem;
+      color: v.$color-text;
+
+      &--locacion {
+        background: linear-gradient(
+          135deg,
+          v.$color-button,
+          rgba(v.$negro, 0.8)
+        );
+      }
+
+      &--telefono {
+        background: linear-gradient(135deg, v.$gris-oscuro, #2c3e50);
+      }
+
+      &--whatsapp {
+        background: linear-gradient(135deg, #128c7e, #075e54);
+      }
+
+      &--email {
+        background: linear-gradient(135deg, v.$gris-oscuro, v.$gris);
+      }
+      &--clock {
+        background: linear-gradient(135deg, v.$color-accent, v.$color-button);
+      }
+    }
+
+    &-content {
+      flex: 1;
+    }
+
+    &-label {
+      font-size: 1.4rem;
+      color: v.$color-accent;
+      font-weight: v.$bold;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05rem;
+    }
+
+    &-text {
+      font-size: 1.5rem;
+      color: v.$color-text;
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+      font-weight: v.$regular;
+
+      &--link {
+        color: v.$color-accent;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+
+        &:hover {
+          color: color.adjust(v.$color-accent, $lightness: 10%);
+          transform: translateX(0.3rem);
+        }
+      }
+
+      &--closed {
+        color: v.$color-secondary;
+        font-style: italic;
+      }
+    }
+  }
+  //redes sociales
+  &__redes {
+    margin-top: 3rem;
+
+    &-title {
+      font-size: 1.6rem;
+      color: v.$color-accent;
+      font-weight: v.$bold;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    &-links {
+      @include m.displayFlex(space-evenly, center, row);
+    }
+  }
+
+  &__red {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 1rem;
+    @include m.displayFlex(center, center, row);
+    font-size: 2rem;
+    color: v.$color-text;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-0.5rem) scale(1.1);
+    }
+
+    &--facebook {
+      background: linear-gradient(180deg, #1877f2 0%, #0668e1 100%);
+    }
+
+    &--instagram {
+      background: linear-gradient(
+        135deg,
+        #feda75,
+        #fa7e1e,
+        #d62976,
+        #962fbf,
+        #4f5bd5
+      );
+    }
+
+    &--twitter {
+      background: linear-gradient(135deg, #000000, #333333);
+    }
+
+    &--tiktok {
+      background: rgba(v.$negro, 3);
+    }
+  }
+
+  &__formulario {
+    background: rgba(v.$color-secondary, 0.1);
+    border-radius: 2rem;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+
+    &-title {
+      @include m.formularioTitle(2.4rem, 1rem, 2.8rem);
+    }
+
+    &-subtitle {
+      @include m.formularioSubtitle(1.4rem, 4rem);
+    }
+  }
+
+  &__form {
+    &-group {
+      margin-bottom: 2.5rem;
+    }
+
+    &-label {
+      @include m.formLabel;
+
+      i {
+        font-size: 1.8rem;
+      }
+    }
+
+    &-input,
+    &-textarea {
+      @include m.formInput();
+
+      option {
+        background: v.$color-bg;
+        color: v.$color-text;
+      }
+    }
+
+    &-textarea {
+      resize: vertical;
+      min-height: 12rem;
+    }
+
+    &-submit {
+      @include m.formSubmitButton();
+    }
+  }
+
+  // ELEMENT: mapa
+  &__mapa {
+    margin-top: 6rem;
+
+    &-title {
+      font-size: 2.4rem;
+      color: v.$color-accent;
+      text-align: center;
+      margin-bottom: 3rem;
+      font-weight: v.$bold;
+
+      @include m.tablet {
+        font-size: 2.8rem;
+      }
+    }
+
+    &-contenedor {
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 2px solid rgba(v.$color-accent, 0.3);
+      box-shadow: 0 1rem 3rem rgba(v.$color-bg, 0.3);
+    }
+
+    &-iframe {
+      width: 100%;
+      height: 40rem;
+      border: none;
+      display: block;
+
+      @include m.tablet {
+        height: 50rem;
+      }
+    }
+  }
+
+  // ELEMENT: CTA (Call to Action)
+  &__cta {
+    margin-top: 6rem;
+    background: linear-gradient(
+      135deg,
+      rgba(v.$color-accent, 0.2),
+      rgba(v.$color-button, 0.2)
+    );
+    border: 2px solid rgba(v.$color-accent, 0.3);
+    border-radius: 2rem;
+    padding: 4rem 3rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+
+    @include m.tablet {
+      padding: 5rem 4rem;
+    }
+
+    &-content {
+      max-width: 70rem;
+      margin: 0 auto;
+    }
+
+    &-title {
+      font-size: 2.8rem;
+      color: v.$color-accent;
+      margin-bottom: 1.5rem;
+      font-weight: v.$bold;
+
+      @include m.tablet {
+        font-size: 3.5rem;
+      }
+    }
+
+    &-text {
+      font-size: 1.6rem;
+      color: v.$color-text;
+      margin-bottom: 3rem;
+      font-weight: v.$regular;
+      line-height: 1.6;
+
+      @include m.tablet {
+        font-size: 1.8rem;
+      }
+    }
+
+    &-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: v.$color-accent;
+      color: v.$color-bg;
+      padding: 2rem 4rem;
+      font-size: 1.8rem;
+      font-weight: v.$bold;
+      border-radius: 3rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      box-shadow: 0 1rem 3rem rgba(v.$color-accent, 0.4);
+
+      i {
+        font-size: 2.2rem;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover {
+        background: color.adjust(v.$color-accent, $lightness: -10%);
+        transform: translateY(-0.5rem);
+        box-shadow: 0 1.5rem 4rem rgba(v.$color-accent, 0.6);
+
+        i {
+          transform: scale(1.2);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+// ============================================
+// ANIMACIONES
+// ============================================
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

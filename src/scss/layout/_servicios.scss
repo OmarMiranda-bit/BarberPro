@@ -1,0 +1,95 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use "sass:color";
+
+.listado-servicios {
+    display: grid;
+    gap: 2rem;
+    
+    @include m.tablet {
+        @include m.grid(2, 2rem);
+    }
+    
+    @include m.desktop {
+        @include m.grid(3, 2rem);
+    }
+}
+
+.servicio {
+    background-color: v.$blanco;
+    border-radius: 1.3rem;
+    overflow: hidden;
+    transition: all 300ms ease;
+    cursor: pointer;
+    box-shadow: 0 0.5rem 1.5rem rgba(v.$negro, 0.1);
+    margin: 0 2.5rem;
+    @include m.tablet {
+        margin: 0;
+    }
+    
+    &:hover {
+        transform: translateY(-1rem);
+        box-shadow: 0 1rem 3rem rgba(v.$negro, 0.15);
+    }
+    
+    // Cuando el servicio está seleccionado aplica estilos adicionales
+    &.seleccionado {
+        background-color: v.$azul;
+        transform: translateY(-1rem) scale(1.02);
+        box-shadow: 0 1.5rem 4rem rgba(v.$azul, 0.4);
+        
+        .servicio__nombre,
+        .servicio__precio {
+            color: v.$blanco;
+        }
+        
+        .servicio__imagen {
+            opacity: 0.9;
+        }
+    }
+    
+    // ELEMENT: imagen
+    &__imagen {
+        width: 100%;
+        height: 20rem;
+        object-fit: cover;
+        display: block;
+        transition: all 300ms ease;
+        
+        @include m.tablet {
+            height: 22rem;
+        }
+    }
+    
+    // ELEMENT: contenido
+    &__contenido {
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    // ELEMENT: nombre
+    &__nombre {
+        color: v.$negro;
+        font-size: 1.8rem;
+        font-weight: v.$bold;
+        margin: 0 0 1rem 0;
+        user-select: none;
+        
+        @include m.tablet {
+            font-size: 2rem;
+        }
+    }
+    
+    // ELEMENT: precio
+    &__precio {
+        color: v.$azul;
+        font-weight: v.$black;
+        font-size: 2.5rem;
+        margin: 0;
+        user-select: none;
+        
+        @include m.tablet {
+            font-size: 2.8rem;
+        }
+    }
+}

@@ -1,0 +1,76 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+/* ----ESTILOS PARA LA SECCIÓN DEL EQUIPO EN LA PÁGINA INICIO-----*/
+.team {
+  @include m.grid-auto(4rem);
+
+  &__card {
+    background: rgba(v.$color-secondary, 0.3);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 2px solid rgba(v.$color-accent, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-1rem);
+      border-color: v.$color-accent;
+      box-shadow: 0 1rem 3rem rgba(v.$color-accent, 0.3);
+    }
+  }
+  &__image {
+    width: 100%;
+    height: 35rem;
+    object-fit: cover;
+    display: block;
+  }
+  &__info {
+    padding: 2.5rem;
+    text-align: center;
+  }
+  &__name {
+    font-size: 2.2rem;
+    color: v.$color-accent;
+    margin-bottom: 0.5rem;
+    font-weight: v.$bold;
+  }
+  &__role {
+    font-size: 1.6rem;
+    color: v.$color-secondary;
+    margin-bottom: 1.5rem;
+    font-weight: v.$regular;
+  }
+  &__experience {
+    font-size: 1.4rem;
+    color: v.$color-text;
+    margin-bottom: 1.5rem;
+    font-weight: v.$regular;
+  }
+
+  &__socials {
+    @include m.displayFlex(center, center, row);
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+
+  &__social-link {
+    @include m.displayFlex(center, center, row);
+    width: 3.6rem;
+    height: 3.6rem;
+    background-color: v.$gris-oscuro;
+    color: v.$blanco;
+    font-size: 1.8rem;
+    text-decoration: none;
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease,
+      color 0.3s ease;
+
+    &:hover {
+      transform: translateY(-0.3rem);
+      background-color: v.$azul;
+      color: v.$blanco;
+    }
+  }
+}
