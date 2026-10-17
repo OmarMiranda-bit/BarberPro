@@ -35,8 +35,8 @@ class AdminController
         $consulta .= "servicios.nombre as servicio, servicios.precio, servicios.duracion ";
         $consulta .= "FROM citas ";
         $consulta .= "LEFT JOIN usuarios ON usuarios.id = citas.usuarioId ";
-        $consulta .= "LEFT JOIN citasServicios ON citasServicios.citaId = citas.id ";
-        $consulta .= "LEFT JOIN servicios ON servicios.id = citasServicios.servicioId ";
+        $consulta .= "LEFT JOIN citasservicios ON citasservicios.citaId = citas.id ";
+        $consulta .= "LEFT JOIN servicios ON servicios.id = citasservicios.servicioId ";
         $consulta .= "WHERE citas.fecha = '{$fecha}' ";
         $consulta .= "AND citas.empleadoId = ( ";
         $consulta .= "  SELECT id FROM empleados WHERE usuario_id = '{$usuarioId}' LIMIT 1 ";

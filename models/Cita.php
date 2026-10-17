@@ -99,7 +99,7 @@ class Cita extends ActiveRecord
     AND c.estado != 'cancelada'
     ";
 
-        // 💡 SI VIENE UN FOLIO A EXCLUIR, LO AGREGAMOS AL WHERE antes del GROUP BY
+        // SI VIENE UN FOLIO A EXCLUIR, LO AGREGAMOS AL WHERE antes del GROUP BY
         if (!empty($excluirFolio)) {
             $query .= " AND c.folio != '$excluirFolio' ";
         }

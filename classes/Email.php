@@ -228,6 +228,62 @@ class Email
         return $mail->send();
     }
 
+    public function enviarCancelacion($fecha, $hora)
+    {
+        $mail = new PHPMailer();
+        $mail->SMTPDebug = 0;
+        $mail->isSMTP();
+        $mail->Host = $_ENV['EMAIL_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
+
+        $mail->setFrom('no-reply@barberpro.com', 'BarberPro');
+        $mail->addAddress($this->email, $this->nombre);
+        $mail->Subject = 'Aviso Importante: Cancelación de Cita';
+
+        $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
+
+        $nombre = htmlspecialchars($this->nombre, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $fecha = htmlspecialchars($fecha, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $hora = htmlspecialchars($hora, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+        $contenido = '<html>';
+        $contenido .= '<head>';
+        $contenido .= '<style>';
+        $contenido .= 'body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background-color: #121212; margin: 0; padding: 20px; color: #e0e0e0; }';
+        $contenido .= '.card { max-width: 520px; margin: 0 auto; background-color: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 12px; padding: 30px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }';
+        $contenido .= '.brand { color: #c5a059; font-size: 22px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; }';
+        $contenido .= '.subtitle { color: #a1a1aa; font-size: 13px; margin-bottom: 20px; }';
+        $contenido .= '.title { color: #ffffff; font-size: 18px; font-weight: bold; margin-bottom: 15px; }';
+        $contenido .= '.text { font-size: 14px; color: #a1a1aa; line-height: 1.6; margin-bottom: 25px; }';
+        $contenido .= '.appointment-box { background-color: #18181b; border: 1px solid #2a2a2a; border-left: 3px solid #c5a059; padding: 15px; border-radius: 8px; margin: 20px 0; }';
+        $contenido .= '.footer { font-size: 12px; color: #71717a; margin-top: 30px; border-top: 1px solid #2a2a2a; padding-top: 15px; }';
+        $contenido .= '</style>';
+        $contenido .= '</head>';
+        $contenido .= '<body>';
+        $contenido .= '<div class="card">';
+        $contenido .= '  <div class="brand">BarberPRO</div>';
+        $contenido .= '  <div class="subtitle">Aviso de Cancelación de Cita</div>';
+        $contenido .= '  <div class="title">Hola ' . $nombre . ',</div>';
+        $contenido .= '  <p class="text">Te informamos que tu cita programada para:</p>';
+        $contenido .= '  <div class="appointment-box">';
+        $contenido .= '    <p class="text"><strong>' . $fecha . '</strong> a las <strong>' . $hora . '</strong></p>';
+        $contenido .= '  </div>';
+        $contenido .= '  <p class="text">ha sido cancelada por imprevisto del barbero. Te invitamos a ingresar a nuestra plataforma para reagendar tu cita en otro horario disponible.</p>';
+        $contenido .= '  <p class="footer">Lamentamos los inconvenientes.</p>';
+        $contenido .= '</div>';
+        $contenido .= '</body>';
+        $contenido .= '</html>';
+
+        $mail->Body = $contenido;
+
+        return $mail->send();
+    }
+
     public function enviarContacto($telefono, $asunto, $mensaje)
     {
         $mail = new PHPMailer();

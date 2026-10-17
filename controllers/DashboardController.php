@@ -87,10 +87,10 @@ class DashboardController
 
         // 7. Datos para Gráficas JSON
         $resEstados = ActiveRecord::consultarPlano("
-            SELECT estado, COUNT(*) as cantidad 
+            SELECT UPPER(TRIM(estado)) as estado, COUNT(*) as cantidad
             FROM citas 
             WHERE MONTH(fecha) = {$mesActual} AND YEAR(fecha) = {$añoActual}
-            GROUP BY estado
+            GROUP BY UPPER(TRIM(estado))
         ");
 
         $resServicios = ActiveRecord::consultarPlano("

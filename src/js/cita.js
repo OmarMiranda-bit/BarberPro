@@ -130,12 +130,10 @@ function botonesPaginador() {
   const paginaAnterior = document.querySelector("#anterior");
   const paginaSiguiente = document.querySelector("#siguiente");
 
-  // *** CAMBIO AGREGADO ***
   // Verificar si existen los botones antes de manipularlos
   if (!paginaAnterior || !paginaSiguiente) {
     return; // Sale si alguno no existe
   }
-  // *** FIN DEL CAMBIO ***
 
   // Si estamos en el paso 1 (inicio)
   if (paso === 1) {
@@ -491,50 +489,7 @@ function inicializarFlatpickr() {
   }
 }
 
-// Función que carga y muestra los horarios disponibles
-// async function cargarHorarios() {
-//   // Obtener el ID del servicio (el primero seleccionado por ahora)
-//   const barberoId = cita.barberoId;
-//   const fecha = cita.fecha;
-//   const contenedor = document.querySelector("#horarios");
 
-//   // Necesitamos los 3 para consultar
-//   if (!barberoId || cita.servicios.length === 0 || !fecha) {
-//     if (contenedor) {
-//       contenedor.innerHTML =
-//         "<p class='sin-horarios'>Selecciona barbero, servicio y fecha para ver horarios</p>";
-//     }
-//     return;
-//   }
-
-//   // Sumar duración de TODOS los servicios seleccionados
-//   const duracionTotal = cita.servicios.reduce((total, servicio) => {
-//     return total + (parseInt(servicio.duracion) || 0);
-//   }, 0);
-
-//   // Loading
-//   if (contenedor) {
-//     contenedor.innerHTML =
-//       "<p class='sin-horarios'>Buscando horarios disponibles...</p>";
-//   }
-
-//   try {
-//     // Llamar al API para obtener horarios
-//     const url = `/api/horarios?barberoId=${barberoId}&duracion=${duracionTotal}&fecha=${fecha}`;
-//     const respuesta = await fetch(url);
-//     const horarios = await respuesta.json();
-
-//     if (horarios.error) {
-//       if (contenedor)
-//         contenedor.innerHTML = `<p class='sin-horarios'>${horarios.error}</p>`;
-//       return;
-//     }
-
-//     mostrarHorarios(horarios);
-//   } catch (error) {
-//     console.error("Error al cargar horarios:", error);
-//   }
-// }
 
 // Función que carga y muestra los horarios disponibles
 async function cargarHorarios() {
@@ -582,43 +537,7 @@ async function cargarHorarios() {
   }
 }
 
-// Función que renderiza los horarios en un grid
-// function mostrarHorarios(horarios) {
-//   const contenedorHorarios = document.querySelector("#horarios");
-
-//   if (!contenedorHorarios) {
-//     return;
-//   }
-
-//   // Limpiar horarios anteriores
-//   contenedorHorarios.innerHTML = "";
-
-//   // Si no hay horarios, mostrar mensaje
-//   if (horarios.length === 0) {
-//     contenedorHorarios.innerHTML =
-//       "<p class='sin-horarios'>No hay horarios disponibles</p>";
-//     return;
-//   }
-
-//   // Crear un botón para cada horario
-//   horarios.forEach((slot) => {
-//     const botonHorario = document.createElement("BUTTON");
-//     botonHorario.type = "button";
-//     botonHorario.textContent = slot.hora;
-
-//     if (slot.disponible) {
-//       botonHorario.classList.add("horario-btn");
-//       botonHorario.onclick = function () {
-//         seleccionarHorario(slot.hora, botonHorario);
-//       };
-//     } else {
-//       botonHorario.classList.add("horario-btn", "horario-btn--ocupado");
-//       botonHorario.disabled = true;
-//     }
-
-//     contenedorHorarios.appendChild(botonHorario);
-//   });
-// }
+// Función que maneja la selección de un horario
 function mostrarHorarios(horarios) {
   const contenedorHorarios = document.querySelector("#horarios");
   if (!contenedorHorarios) return;

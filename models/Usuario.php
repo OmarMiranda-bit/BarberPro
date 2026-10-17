@@ -1,8 +1,5 @@
 <?php
-
 namespace Model;
-// #[\AllowDynamicProperties]
-
 class Usuario extends ActiveRecord
 {
     protected static $tabla = 'usuarios';

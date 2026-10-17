@@ -57,8 +57,6 @@ class BarberosController
 
     public static function crear(Router $router)
     {
-        // error_reporting(E_ALL & ~E_DEPRECATED);
-
         if (!isSuperAdmin()) {
             header('Location: /login');
         }

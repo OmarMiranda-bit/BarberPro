@@ -10,7 +10,6 @@ use Model\Empleado;
 use Model\Horario;
 use Model\Servicio;
 use Model\Usuario;
-use PHPMailer\PHPMailer\PHPMailer;
 
 class APIController
 {
@@ -400,7 +399,8 @@ class APIController
 
                     $cliente = Usuario::find($cita->usuarioId);
                     if ($cliente && $cliente->email) {
-                        self::enviarCorreoCancelacion($cliente->email, $cliente->nombre, $cita->fecha, $cita->hora);
+                        $email = new Email($cliente->nombre, $cliente->email, '');
+                        $email->enviarCancelacion($cita->fecha, $cita->hora);
                     }
                 }
             }
@@ -418,31 +418,4 @@ class APIController
         }
     }
 
-    // Auxiliar para enviar correo electrónico
-    private static function enviarCorreoCancelacion($email, $nombre, $fecha, $hora)
-    {
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        $mail->Host = $_ENV['EMAIL_HOST'] ?? 'smtp.mailtrap.io';
-        $mail->SMTPAuth = true;
-        $mail->Port = $_ENV['EMAIL_PORT'] ?? 2525;
-        $mail->Username = $_ENV['EMAIL_USER'] ?? '';
-        $mail->Password = $_ENV['EMAIL_PASS'] ?? '';
-        $mail->isHTML(true);
-        $mail->CharSet = 'UTF-8';
-
-        $mail->setFrom('no-reply@barberpro.com', 'BarberPro');
-        $mail->addAddress($email, $nombre);
-        $mail->Subject = 'Aviso Importante: Cancelación de Cita';
-
-        $contenido = '<html>';
-        $contenido .= '<p>Hola <strong>' . $nombre . '</strong>,</p>';
-        $contenido .= '<p>Te informamos que tu cita programada para el <strong>' . $fecha . '</strong> a las <strong>' . $hora . '</strong> ha sido cancelada por imprevisto del barbero.</p>';
-        $contenido .= '<p>Te invitamos a ingresar a nuestra plataforma para reagendar tu cita en otro horario disponible.</p>';
-        $contenido .= '<p>Lamentamos los inconvenientes.</p>';
-        $contenido .= '</html>';
-
-        $mail->Body = $contenido;
-        $mail->send();
-    }
 }
